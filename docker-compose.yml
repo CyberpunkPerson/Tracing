@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  application:
+    container_name: tracing
+    build: .
+    ports:
+      - 8080:8080
+
+  tracing-zookeeper:
+    container_name: tracing-kafka-zookeeper
+    image: confluentinc/cp-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 2181:2181
+
+  tracing-kafka:
+    container_name: tracing-kafka
+    image: confluentinc/cp-kafka
+    depends_on:
+      - tracing-zookeeper
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: tracing-zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://tracing-kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KSQL_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="username" password="password"
+    volumes:
+      - ./volumes/tracing/run/docker.sock:/var/run/docker.sock

@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: tracing
+  main:
+    banner-mode: "off"
+
+logging:
+  level:
+    root: info
+    com.github.cyberpunkperson.tracing: debug
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X] %logger{80} %msg%n'
