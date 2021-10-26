@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  application:
-    container_name: tracing
-    build: .
+  tracing-handler:
+    container_name: tracing-handler
+    build: 'kafka-handler'
     ports:
       - 8080:8080
 
