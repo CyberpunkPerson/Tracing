@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: tracing-spammer
+  main:
+    banner-mode: "off"
+
+logging:
+  level:
+    root: info
+    com.github.cyberpunkperson.tracing: debug
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X] %logger{80} %msg%n'
+
+spammer:
+  records:
+    dc:
+      amount: 10000
+    marvel:
+      amount: 10000
+
+kafka:
+  producer:
+    bootstrap.servers: localhost:29092
+    client.id: ${spring.application.name}
+    group.id: ${spring.application.name}
+    security.protocol: PLAINTEXT
+  topic:
+    dc:
+      name: dc-news
+    marvel:
+      name: marvel-news
