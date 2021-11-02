@@ -4,5 +4,5 @@ COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml package
 
 FROM openjdk:17-jdk AS package
-COPY --from=build /home/app/target/tracing.jar /opt/app.jar
+COPY --from=build /home/app/target/tracing-handler.jar /opt/app.jar
 ENTRYPOINT ["java","-jar","/opt/app.jar"]
