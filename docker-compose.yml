@@ -3,7 +3,7 @@ version: '3.8'
 services:
   tracing-handler:
     container_name: tracing-handler
-    build: 'kafka-handler'
+    build: 'tracing-handler'
     ports:
       - 8080:8080
 
