@@ -58,19 +58,6 @@
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
 
-        <!--Test-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <!--Common-->
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -7,7 +7,7 @@ import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.MessageChannels;
 import org.springframework.integration.kafka.inbound.KafkaMessageDrivenChannelAdapter;
-import org.springframework.kafka.listener.KafkaMessageListenerContainer;
+import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.messaging.MessageChannel;
 import src.main.java.com.github.cyberpunkperson.tracing.marvel.kafka.event.Marvel.Event;
 
@@ -18,10 +18,10 @@ import static org.springframework.integration.dsl.IntegrationFlows.from;
 class MarvelConfiguration {
 
     @Bean
-    KafkaMessageDrivenChannelAdapter<String, byte[]> inboundMarvelChannelAdapter(KafkaMessageListenerContainer<String, byte[]> marvelContainer,
+    KafkaMessageDrivenChannelAdapter<String, byte[]> inboundMarvelChannelAdapter(ConcurrentMessageListenerContainer<String, byte[]> marvelContainer,
                                                                                  MessageChannel integrationErrorChannel) {
         var inboundAdapter = new KafkaMessageDrivenChannelAdapter<>(marvelContainer);
-        inboundAdapter.setPayloadType(byte.class);
+        inboundAdapter.setPayloadType(byte[].class);
         inboundAdapter.setBindSourceRecord(true);
         inboundAdapter.setMessageConverter(new ProtoEventMessageConverter<>(Event.newBuilder().build().getParserForType()));
         inboundAdapter.setErrorChannel(integrationErrorChannel);
